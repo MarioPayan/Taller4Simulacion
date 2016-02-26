@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -17,7 +16,7 @@ public class Lectura {
 
 	public void leer() {
 		int fila = 0;
-		File f = new File("entrada.txt");
+		File f = new File("sudoku1.txt");
 		Scanner s;
 		try {
 			s = new Scanner(f);
