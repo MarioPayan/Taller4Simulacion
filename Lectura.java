@@ -14,9 +14,9 @@ public class Lectura {
 		}
 	}
 
-	public void leer() {
+	public void leer(String path) {
 		int fila = 0;
-		File f = new File("sudoku1.txt");
+		File f = new File(path);
 		Scanner s;
 		try {
 			s = new Scanner(f);

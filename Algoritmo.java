@@ -5,6 +5,9 @@ public class Algoritmo{
 	private Generador generador;
 	private int tamPosibilidades;
 	private boolean solucionado;
+	public boolean pasoOrden;
+
+	public int intentosNecesarios;
 
 	public Algoritmo(int[][] matrix){
 		this.matrix = matrix;
@@ -14,6 +17,7 @@ public class Algoritmo{
 		generador = new Generador(0);
 		tamPosibilidades = 0;
 		solucionado = false;
+		pasoOrden = true;
 	}
 
 	public void resolverIterando(int intentos){
@@ -32,22 +36,30 @@ public class Algoritmo{
 				break;
 			}
 		}while(!resolver());
-		System.out.println("Numero de iteraciones: "+ intentos);
-		System.out.println("Celdas faltantes originalmente: "+ faltantesOriginal);
-		System.out.println("Minimo de celdas faltantes: "+ cerca);
+		
 		if(solucionado){
-			System.out.println("SI se alcanzó la solucion");
+			System.out.println("SI se alcanzó la solucion:");
+			cerca = 0;
+			pintar();
+			System.out.println("");
+			intentosNecesarios = intento;
+			System.out.println("Numero de iteraciones: "+ intento);
 		}else{
 			System.out.println("NO se alcanzó la solucion");
+			System.out.println("Numero de iteraciones: "+ (intento-1));
 		}
+		System.out.println("Celdas faltantes originalmente: "+ faltantesOriginal);
+		System.out.println("Minimo de celdas faltantes: "+ cerca);
 	}
 
 	public boolean resolver(){
 		tamPosibilidades = -1;
 		faltantes = contarFaltantes();
 		boolean exito = true;
+		int[] posiciones;
 		for(int i=0;i<faltantes;i++){
-			int[] posiciones = seleccionarEnOrden();
+			if(pasoOrden){posiciones = seleccionarEnOrden();}
+			else{posiciones = seleccionarPorPeso();}
 			if(!resolverCasilla(posiciones[0], posiciones[1])){
 				faltantes -= i+1;
 				exito = false;
