@@ -5,9 +5,10 @@ public class Algoritmo{
 	private Generador generador;
 	private int tamPosibilidades;
 	private boolean solucionado;
-	public boolean pasoOrden;
 
+	public boolean pasoOrden;
 	public int intentosNecesarios;
+	public double faltantesPromedio;
 
 	public Algoritmo(int[][] matrix){
 		this.matrix = matrix;
@@ -18,6 +19,7 @@ public class Algoritmo{
 		tamPosibilidades = 0;
 		solucionado = false;
 		pasoOrden = true;
+		faltantesPromedio = 0;
 	}
 
 	public void resolverIterando(int intentos){
@@ -29,6 +31,7 @@ public class Algoritmo{
 			pintar();
 			copiadoMatrix(matrixOriginal, matrix);
 			System.out.println("Le faltaron: " + faltantes + " celdas");
+			faltantesPromedio += faltantes;
 			if(faltantes<cerca){cerca=faltantes;}
 			intento++;
 			System.out.println("");
@@ -36,7 +39,7 @@ public class Algoritmo{
 				break;
 			}
 		}while(!resolver());
-		
+		faltantesPromedio = faltantesPromedio / (double) intento;
 		if(solucionado){
 			System.out.println("SI se alcanzó la solucion:");
 			cerca = 0;
@@ -48,6 +51,8 @@ public class Algoritmo{
 			System.out.println("NO se alcanzó la solucion");
 			System.out.println("Numero de iteraciones: "+ (intento-1));
 		}
+		System.out.println("Celdas faltantes promedio: "+ faltantesPromedio);
+		System.out.println("Celdas promedio para fracaso: "+ (faltantesOriginal-faltantesPromedio));
 		System.out.println("Celdas faltantes originalmente: "+ faltantesOriginal);
 		System.out.println("Minimo de celdas faltantes: "+ cerca);
 	}
